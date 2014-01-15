@@ -1,4 +1,4 @@
-{% extends 'snolab_booking/base.html' %}
+{% extends 'ukbooking/base.html' %}
 {% block head_title %}SNOLAB Visits{% endblock %}
 {% block head_script %}
 {% load static from staticfiles %}
@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 </script>
 {% endblock %}
 {% block content %}
-{% load snolab_booking_filters %}
+{% load ukbooking_filters %}
 <div class="row-fluid">
   <div class="span1">
     <a href="{% url 'bookings' prev.0 prev.1 %}">{{ prev.1|month_name}}</a>
