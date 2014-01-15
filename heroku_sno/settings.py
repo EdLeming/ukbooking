@@ -107,6 +107,7 @@ ROOT_URLCONF = 'heroku_sno.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'heroku_sno.wsgi.application'
 
+import os.path
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), "templates"),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
