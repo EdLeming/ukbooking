@@ -114,7 +114,7 @@ def book_visit(request):
             clean_data = form.cleaned_data
             visit = Visit(contact=clean_data['contact'], 
                           check_in=clean_data['check_in'],
-                          check_out=clean_data['check_out'],
+                          check_out=clean_data['check_out'])
             visit.save()
             room_contact = Bed.objects.filter(pk=clean_data['bed_request'])
             send_mail("Room Request", "%s from %s to %s for experiment %s." % (clean_data['bed_request'], 
