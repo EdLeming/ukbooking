@@ -11,6 +11,10 @@ import time
 from ukbooking.models import Apartment, Bed, Booking, Visit
 #from snolab_booking.forms import VisitForm
 
+def index(request):
+    """ Return generic index."""
+    return render(request, 'ukbooking/index.html')
+
 class Apartments(generic.ListView):
     model = Apartment
     template_name = "ukbooking/apartments.html"
