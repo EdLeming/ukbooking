@@ -119,7 +119,7 @@ def book_visit(request):
             room_contact = Bed.objects.filter(pk=clean_data['bed_request'])
             send_mail("Room Request", "%s from %s to %s for experiment %s." % (clean_data['bed_request'], 
                                                                                clean_data['check_in'], 
-                                                                               clean_data['check_out'])
+                                                                               clean_data['check_out']),
                       "noreply@snolab.com", [clean_data['contact'], room_contact[0].apartment.contact])
             return render(request, 'ukbooking/book_visit.html') # Redirect after POST
     else:
