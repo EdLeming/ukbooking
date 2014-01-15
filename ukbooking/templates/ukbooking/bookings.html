@@ -1,0 +1,64 @@
+{% extends 'snolab_booking/base.html' %}
+{% block head_title %}SNOLAB Visits{% endblock %}
+{% block head_script %}
+{% load static from staticfiles %}
+<script src="{% static "js/jquery.js" %}"></script>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+  jQuery(".tbcont").hide();
+  //toggle the componenet with class msg_body
+  jQuery(".tbhide").click(function()
+  {
+    jQuery(this).next(".tbcont").slideToggle(100);
+  });
+});
+</script>
+{% endblock %}
+{% block content %}
+{% load snolab_booking_filters %}
+<div class="row-fluid">
+  <div class="span1">
+    <a href="{% url 'bookings' prev.0 prev.1 %}">{{ prev.1|month_name}}</a>
+  </div>
+  <div class="span3 offset1">
+    <h3><center>{{ now.1|month_name }} {{ now.0 }}</center></h3>
+  </div>
+  <div class="span1 offset1">
+    <a href="{% url 'bookings' next.0 next.1 %}">{{ next.1|month_name}}</a>
+  </div>
+</div>
+<table class="table table-bordered" width="100%">
+<thead>
+<tr>
+<th>Sunday</th>
+<th>Monday</th>
+<th>Tuesday</th>
+<th>Wednesday</th>
+<th>Thursday</th>
+<th>Friday</th>
+<th>Saturday</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+{% for day in day_bookings %}
+  {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:7 %}
+    </tr><tr>
+  {% endif %}
+  <td valign='top'>
+    <table class="table table-hover">
+      <thead class="tbhide">
+        <tr><td>{% if day.1 != None %}<a href="#" title="Click to view details.">{{ day.0|day_suffix }} - {{ day.1|length }} bookings</a>{% endif %}</td></tr>
+      </thead>
+      <tbody class="tbcont">
+        {% for visit in day.1 %}
+        <tr><td><a href="{% url 'booking' visit.pk %}">{{ booking }}</a></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </td>
+{% endfor %}
+</tr>
+</tbody>
+</table>
+{% endblock %}
