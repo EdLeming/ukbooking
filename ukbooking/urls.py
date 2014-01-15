@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from booking import views
+from ukbooking import views
 
 urlpatterns = patterns('',
                        #url(r'^$', views.index, name='index'),
