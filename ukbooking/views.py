@@ -46,9 +46,9 @@ def bookings(request, year=time.localtime()[0], month=time.localtime()[1]):
     year = int(year)
     month = int(month)
     return render(request, 'ukbooking/bookings.html', {'day_bookings' : bookings_per_month(year, month),
-                                                            'now' : [year, month],
-                                                            'prev' : prev_date(year, month),
-                                                            'next' : next_date(year, month)})
+                                                       'now' : [year, month],
+                                                       'prev' : prev_date(year, month),
+                                                       'next' : next_date(year, month)})
 
 def visits_per_month(year, month):
     """ Vists per day for the month."""

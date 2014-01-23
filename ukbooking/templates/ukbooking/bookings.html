@@ -51,9 +51,9 @@ jQuery(document).ready(function() {
         <tr><td>{% if day.1 != None %}<a href="#" title="Click to view details.">{{ day.0|day_suffix }} - {{ day.1|length }} bookings</a>{% endif %}</td></tr>
       </thead>
       <tbody class="tbcont">
-        {% for visit in day.1 %}
-        <tr><td><a href="{% url 'booking' visit.pk %}">{{ booking }}</a></td></tr>
-      {% endfor %}
+        {% for booking in day.1 %}
+          <tr><td><a href="{% url 'booking' visit.pk %}">{{ booking }}</a></td></tr>
+        {% endfor %}
       </tbody>
     </table>
   </td>
