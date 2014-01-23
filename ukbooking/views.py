@@ -53,6 +53,7 @@ def bookings(request, year=time.localtime()[0], month=time.localtime()[1]):
 def visits_per_month(year, month):
     """ Vists per day for the month."""
     day_information = []
+    month_information = None
     year, month = int(year), int(month)
     cal = calendar.Calendar(6) # Weeks start on Sunday    
     for day in cal.itermonthdays(year, month):
@@ -62,26 +63,31 @@ def visits_per_month(year, month):
         # Include bookings with a check in before or on today and exclude with a check out before today
         visits = Visit.objects.filter(check_in__lte=datetime.datetime(year, month, day))
         visits = visits.exclude(check_out__lt=datetime.datetime(year, month, day))
+        if month_information is None:
+            month_information = visits
+        month_information = month_information | visits
         day_information.append([day, visits])
-    return day_information
+    return day_information, month_information
 
 def visits(request, year=time.localtime()[0], month=time.localtime()[1]):
     """ View of visits in a month."""
     year = int(year)
     month = int(month)
-    return render(request, 'ukbooking/visits.html', {'day_visits' : visits_per_month(year, month),
-                                                          'now' : [year, month],
-                                                          'prev' : prev_date(year, month),
-                                                          'next' : next_date(year, month)})
+    day_visits, month_visits = visits_per_month(year, month)
+    return render(request, 'ukbooking/visits.html', {'day_visits' : day_visits,
+                                                     'month_visits' : month_visits,
+                                                     'now' : [year, month],
+                                                     'prev' : prev_date(year, month),
+                                                     'next' : next_date(year, month)})
 
 def index(request):
     """ View of visits and bookings in this month."""
     year, month = time.localtime()[:2]
     return render(request, 'ukbooking/index.html', {'day_visits' : visits_per_month(year, month),
-                                                         'day_bookings' : bookings_per_month(year, month),
-                                                         'now' : [year, month],
-                                                         'prev' : prev_date(year, month),
-                                                         'next' : next_date(year, month)})
+                                                    'day_bookings' : bookings_per_month(year, month),
+                                                    'now' : [year, month],
+                                                    'prev' : prev_date(year, month),
+                                                    'next' : next_date(year, month)})
 
 class Apartments(generic.ListView):
     model = Apartment

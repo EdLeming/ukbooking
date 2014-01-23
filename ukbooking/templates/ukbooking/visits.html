@@ -61,4 +61,8 @@ jQuery(document).ready(function() {
 </tr>
 </tbody>
 </table>
+{% for visit in month_visits %}
+<a href="{% url 'visit' visit.pk %}">{{ visit.contact }}</a><br />
+{% endfor %}
+
 {% endblock %}
