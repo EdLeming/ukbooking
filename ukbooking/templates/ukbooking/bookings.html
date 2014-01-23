@@ -61,4 +61,8 @@ jQuery(document).ready(function() {
 </tr>
 </tbody>
 </table>
+<h2>All bookings this month</h2>
+{% for booking in month_bookings %}
+<a href="{% url 'booking' booking.pk %}">{{ booking }}</a> part of {{ booking.visit }}<br />
+{% endfor %}
 {% endblock %}

@@ -29,6 +29,7 @@ def next_date(year, month):
 def bookings_per_month(year, month):
     """ Bookings per day for the month."""
     day_information = []
+    month_information = None
     year, month = int(year), int(month)
     cal = calendar.Calendar(6) # Weeks start on Sunday    
     for day in cal.itermonthdays(year, month):
@@ -38,14 +39,19 @@ def bookings_per_month(year, month):
         # Include bookings with a check in before or on today and exclude with a check out before today
         bookings = Booking.objects.filter(check_in__lte=datetime.datetime(year, month, day))
         bookings = bookings.exclude(check_out__lt=datetime.datetime(year, month, day))
+        if month_information is None:
+            month_information = bookings
+        month_information = month_information | bookings
         day_information.append([day, bookings])
-    return day_information                    
+    return day_information, month_information
 
 def bookings(request, year=time.localtime()[0], month=time.localtime()[1]):
     """ View of bookings in a month."""
     year = int(year)
     month = int(month)
-    return render(request, 'ukbooking/bookings.html', {'day_bookings' : bookings_per_month(year, month),
+    day_bookings, month_bookings = bookings_per_month(year, month)
+    return render(request, 'ukbooking/bookings.html', {'day_bookings' : day_bookings,
+                                                       'month_bookings' : month_bookings,
                                                        'now' : [year, month],
                                                        'prev' : prev_date(year, month),
                                                        'next' : next_date(year, month)})
