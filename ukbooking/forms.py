@@ -8,7 +8,6 @@ class VisitForm(forms.Form):
                                max_length=254) # 254 is recommended in docs
     check_in = forms.DateTimeField(widget=SelectDateWidget)
     check_out = forms.DateTimeField(widget=SelectDateWidget)
-    bed_request = forms.ModelMultipleChoiceField(queryset=Bed.objects.all(), required=False, help_text="Optional Bed Request")
     def clean(self):
         super(VisitForm, self).clean()
         check_in = self.cleaned_data.get("check_in")

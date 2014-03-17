@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import logout
 from django.views import generic
-from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 
 import calendar
@@ -128,11 +127,6 @@ def book_visit(request):
                           check_in=clean_data['check_in'],
                           check_out=clean_data['check_out'])
             visit.save()
-            room_contact = Bed.objects.filter(pk=clean_data['bed_request'])
-            send_mail("Room Request", "%s from %s to %s." % (clean_data['bed_request'], 
-                                                             clean_data['check_in'], 
-                                                             clean_data['check_out']),
-                      "noreply@snolab.com", [clean_data['contact'], room_contact[0].apartment.contact])
             return render(request, 'ukbooking/book_visit.html') # Redirect after POST
     else:
         form = VisitForm() # An unbound form
