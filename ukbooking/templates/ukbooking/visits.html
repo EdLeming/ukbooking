@@ -28,7 +28,7 @@ jQuery(document).ready(function() {
   </div>
 </div>
 
-% include "ukbooking/calendar.html" with events=day_visits type="visit" %}
+{% include "ukbooking/calendar.html" with events=day_visits type="visit" %}
 
 <h2>All visits this month</h2>
 {% for visit in month_visits %}
