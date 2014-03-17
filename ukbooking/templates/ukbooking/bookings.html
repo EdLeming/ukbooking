@@ -27,42 +27,9 @@ jQuery(document).ready(function() {
     <a href="{% url 'bookings' next.0 next.1 %}">{{ next.1|month_name}}</a>
   </div>
 </div>
+
 {% include "ukbooking/calendar.html" with events=day_bookings type="booking" %}
 
-<table class="table table-bordered" width="100%">
-<thead>
-<tr>
-<th>Sunday</th>
-<th>Monday</th>
-<th>Tuesday</th>
-<th>Wednesday</th>
-<th>Thursday</th>
-<th>Friday</th>
-<th>Saturday</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-{% for day in day_bookings %}
-  {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:7 %}
-    </tr><tr>
-  {% endif %}
-  <td valign='top'>
-    <table class="table table-hover">
-      <thead class="tbhide">
-        <tr><td>{% if day.1 != None %}<a href="#" title="Click to view details.">{{ day.0|day_suffix }} - {{ day.1|length }} bookings</a>{% endif %}</td></tr>
-      </thead>
-      <tbody class="tbcont">
-        {% for booking in day.1 %}
-          <tr><td><a href="{% url 'booking' booking.pk %}">{{ booking }}</a></td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </td>
-{% endfor %}
-</tr>
-</tbody>
-</table>
 <h2>All bookings this month</h2>
 {% for booking in month_bookings %}
 <a href="{% url 'booking' booking.pk %}">{{ booking }}</a> part of {{ booking.visit }}<br />

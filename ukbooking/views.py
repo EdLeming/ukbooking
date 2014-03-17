@@ -24,6 +24,9 @@ def next_date(year, month):
     else:
         return [year, month + 1]
 
+class Bookings(generic.ListView):
+    model = Booking
+    template_name = "ukbooking/bookings_dump.html"
 
 def bookings_per_month(year, month):
     """ Bookings per day for the month."""
@@ -54,6 +57,10 @@ def bookings(request, year=time.localtime()[0], month=time.localtime()[1]):
                                                        'now' : [year, month],
                                                        'prev' : prev_date(year, month),
                                                        'next' : next_date(year, month)})
+
+class Visits(generic.ListView):
+    model = Visit
+    template_name = "ukbooking/visits_dump.html"
 
 def visits_per_month(year, month):
     """ Vists per day for the month."""
