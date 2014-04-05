@@ -1,5 +1,7 @@
+<table width="100%">
 {% for booking in booking_list %}
-{{ booking }} by {{ booking.visit }}<br />
+<tr><td>{{ booking }}</td><td>{{ booking.visit }}</td></tr>
 {% empty %}
-No bookings.
+<tr><td>No bookings.</td></tr>
 {% endfor %}
+</table>
